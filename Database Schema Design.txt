@@ -1,0 +1,73 @@
+// 1. users collection
+{
+  _id: ObjectId,
+  name: String,
+  email: String,
+  phone: String,
+  mentor_id: ObjectId, // reference to mentors collection
+  created_at: Date
+}
+
+// 2. codekata collection
+{
+  _id: ObjectId,
+  user_id: ObjectId, // reference to users collection
+  problem_id: String,
+  problem_title: String,
+  solved: Boolean,
+  solved_date: Date,
+  difficulty: String // easy, medium, hard
+}
+
+// 3. attendance collection
+{
+  _id: ObjectId,
+  user_id: ObjectId, // reference to users collection
+  date: Date,
+  status: String, // present, absent
+  session: String // morning, afternoon
+}
+
+// 4. topics collection
+{
+  _id: ObjectId,
+  topic_name: String,
+  topic_date: Date,
+  duration: Number, // in hours
+  category: String // frontend, backend, database, etc.
+}
+
+// 5. tasks collection
+{
+  _id: ObjectId,
+  task_title: String,
+  topic_id: ObjectId, // reference to topics collection
+  assigned_date: Date,
+  due_date: Date,
+  user_id: ObjectId, // reference to users collection
+  submitted: Boolean,
+  submitted_date: Date,
+  score: Number
+}
+
+// 6. company_drives collection
+{
+  _id: ObjectId,
+  company_name: String,
+  drive_date: Date,
+  location: String,
+  students_appeared: [ObjectId], // array of user_ids
+  description: String
+}
+
+// 7. mentors collection
+{
+  _id: ObjectId,
+  mentor_name: String,
+  email: String,
+  expertise: [String], // array of skills
+  mentee_count: Number
+}
+
+
+
