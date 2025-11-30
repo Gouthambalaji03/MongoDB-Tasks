@@ -1,0 +1,383 @@
+MongoDB Queries 
+
+1. Find all topics and tasks taught in October
+
+// Topics taught in October
+
+db.topics.find({
+  topic_date: {
+    $gte: ISODate("2020-10-01"),
+    $lt: ISODate("2020-11-01")
+  }
+})
+
+Output:
+{
+  _id: ObjectId('707f1f77bcf86cd799439001'),
+  topic_name: 'HTML & CSS',
+  topic_date: 2020-10-05T00:00:00.000Z
+}
+{
+  _id: ObjectId('707f1f77bcf86cd799439002'),
+  topic_name: 'JavaScript Basics',
+  topic_date: 2020-10-10T00:00:00.000Z
+}
+{
+  _id: ObjectId('707f1f77bcf86cd799439003'),
+  topic_name: 'React Introduction',
+  topic_date: 2020-10-15T00:00:00.000Z
+}
+{
+  _id: ObjectId('707f1f77bcf86cd799439004'),
+  topic_name: 'MongoDB Basics',
+  topic_date: 2020-10-20T00:00:00.000Z
+}
+{
+  _id: ObjectId('707f1f77bcf86cd799439005'),
+  topic_name: 'Node.js',
+  topic_date: 2020-10-25T00:00:00.000Z
+}
+
+
+// Tasks assigned in October
+
+db.tasks.find({
+  assigned_date: {
+    $gte: ISODate("2020-10-01"),
+    $lt: ISODate("2020-11-01")
+  }
+})
+
+Output:
+{
+  _id: ObjectId('692ccc65d7753d7742e99964'),
+  task_title: 'HTML Portfolio',
+  topic_id: ObjectId('707f1f77bcf86cd799439001'),
+  user_id: ObjectId('507f1f77bcf86cd799439011'),
+  assigned_date: 2020-10-05T00:00:00.000Z,
+  submitted: true,
+  submitted_date: 2020-10-08T00:00:00.000Z
+}
+{
+  _id: ObjectId('692ccc65d7753d7742e99965'),
+  task_title: 'CSS Styling',
+  topic_id: ObjectId('707f1f77bcf86cd799439001'),
+  user_id: ObjectId('507f1f77bcf86cd799439012'),
+  assigned_date: 2020-10-06T00:00:00.000Z,
+  submitted: false
+}
+{
+  _id: ObjectId('692ccc65d7753d7742e99966'),
+  task_title: 'JavaScript Calculator',
+  topic_id: ObjectId('707f1f77bcf86cd799439002'),
+  user_id: ObjectId('507f1f77bcf86cd799439011'),
+  assigned_date: 2020-10-12T00:00:00.000Z,
+  submitted: true,
+  submitted_date: 2020-10-14T00:00:00.000Z
+}
+{
+  _id: ObjectId('692ccc65d7753d7742e99967'),
+  task_title: 'React Component',
+  topic_id: ObjectId('707f1f77bcf86cd799439003'),
+  user_id: ObjectId('507f1f77bcf86cd799439012'),
+  assigned_date: 2020-10-18T00:00:00.000Z,
+  submitted: false
+}
+{
+  _id: ObjectId('692ccc65d7753d7742e99968'),
+  task_title: 'MongoDB CRUD',
+  topic_id: ObjectId('707f1f77bcf86cd799439004'),
+  user_id: ObjectId('507f1f77bcf86cd799439013'),
+  assigned_date: 2020-10-22T00:00:00.000Z,
+  submitted: false
+}
+
+
+
+2. Find company drives between 15-Oct-2020 and 31-Oct-2020
+
+db.company_drives.find({
+  drive_date: {
+    $gte: ISODate("2020-10-15"),
+    $lte: ISODate("2020-10-31")
+  }
+})
+
+Output:
+{
+  _id: ObjectId('692ccb30d7753d7742e99955'),
+  company_name: 'TCS',
+  drive_date: 2020-10-18T00:00:00.000Z,
+  students_appeared: [
+    ObjectId('507f1f77bcf86cd799439011'),
+    ObjectId('507f1f77bcf86cd799439012'),
+    ObjectId('507f1f77bcf86cd799439013')
+  ]
+}
+{
+  _id: ObjectId('692ccb30d7753d7742e99956'),
+  company_name: 'Infosys',
+  drive_date: 2020-10-22T00:00:00.000Z,
+  students_appeared: [
+    ObjectId('507f1f77bcf86cd799439011'),
+    ObjectId('507f1f77bcf86cd799439014')
+  ]
+}
+{
+  _id: ObjectId('692ccb30d7753d7742e99957'),
+  company_name: 'Wipro',
+  drive_date: 2020-10-28T00:00:00.000Z,
+  students_appeared: [
+    ObjectId('507f1f77bcf86cd799439012'),
+    ObjectId('507f1f77bcf86cd799439013'),
+    ObjectId('507f1f77bcf86cd799439014'),
+    ObjectId('507f1f77bcf86cd799439015')
+  ]
+}
+
+
+3. Find company drives and students who appeared for placement
+
+db.company_drives.aggregate([
+  {
+    $unwind: "$students_appeared"
+  },
+  {
+    $lookup: {
+      from: "users",
+      localField: "students_appeared",
+      foreignField: "_id",
+      as: "student_details"
+    }
+  },
+  {
+    $unwind: "$student_details"
+  },
+  {
+    $project: {
+      company_name: 1,
+      drive_date: 1,
+      location: 1,
+      "student_details.name": 1,
+      "student_details.email": 1,
+      "student_details.phone": 1
+    }
+  }
+])
+
+Output:
+{
+  _id: ObjectId('692ccb30d7753d7742e99955'),
+  company_name: 'TCS',
+  drive_date: 2020-10-18T00:00:00.000Z,
+  student_details: {
+    name: 'Rahul Sharma',
+    email: 'rahul@gmail.com',
+    phone: '9876543210'
+  }
+}
+{
+  _id: ObjectId('692ccb30d7753d7742e99955'),
+  company_name: 'TCS',
+  drive_date: 2020-10-18T00:00:00.000Z,
+  student_details: {
+    name: 'Priya Singh',
+    email: 'priya@gmail.com',
+    phone: '9876543211'
+  }
+}
+{
+  _id: ObjectId('692ccb30d7753d7742e99955'),
+  company_name: 'TCS',
+  drive_date: 2020-10-18T00:00:00.000Z,
+  student_details: {
+    name: 'Amit Kumar',
+    email: 'amit@gmail.com',
+    phone: '9876543212'
+  }
+}
+{
+  _id: ObjectId('692ccb30d7753d7742e99956'),
+  company_name: 'Infosys',
+  drive_date: 2020-10-22T00:00:00.000Z,
+  student_details: {
+    name: 'Rahul Sharma',
+    email: 'rahul@gmail.com',
+    phone: '9876543210'
+  }
+}
+{
+  _id: ObjectId('692ccb30d7753d7742e99956'),
+  company_name: 'Infosys',
+  drive_date: 2020-10-22T00:00:00.000Z,
+  student_details: {
+    name: 'Sneha Patel',
+    email: 'sneha@gmail.com',
+    phone: '9876543213'
+  }
+}
+{
+  _id: ObjectId('692ccb30d7753d7742e99957'),
+  company_name: 'Wipro',
+  drive_date: 2020-10-28T00:00:00.000Z,
+  student_details: {
+    name: 'Priya Singh',
+    email: 'priya@gmail.com',
+    phone: '9876543211'
+  }
+}
+{
+  _id: ObjectId('692ccb30d7753d7742e99957'),
+  company_name: 'Wipro',
+  drive_date: 2020-10-28T00:00:00.000Z,
+  student_details: {
+    name: 'Amit Kumar',
+    email: 'amit@gmail.com',
+    phone: '9876543212'
+  }
+}
+{
+  _id: ObjectId('692ccb30d7753d7742e99957'),
+  company_name: 'Wipro',
+  drive_date: 2020-10-28T00:00:00.000Z,
+  student_details: {
+    name: 'Sneha Patel',
+    email: 'sneha@gmail.com',
+    phone: '9876543213'
+  }
+}
+{
+  _id: ObjectId('692ccb30d7753d7742e99957'),
+  company_name: 'Wipro',
+  drive_date: 2020-10-28T00:00:00.000Z,
+  student_details: {
+    name: 'Vikram Reddy',
+    email: 'vikram@gmail.com',
+    phone: '9876543214'
+  }
+}
+
+
+4. Find number of problems solved by each user in CodeKata
+db.codekata.aggregate([
+  {
+    $match: {
+      solved: true
+    }
+  },
+  {
+    $group: {
+      _id: "$user_id",
+      problems_solved: { $sum: 1 }
+    }
+  },
+  {
+    $lookup: {
+      from: "users",
+      localField: "_id",
+      foreignField: "_id",
+      as: "user_info"
+    }
+  },
+  {
+    $unwind: "$user_info"
+  },
+  {
+    $project: {
+      user_name: "$user_info.name",
+      user_email: "$user_info.email",
+      problems_solved: 1
+    }
+  },
+  {
+    $sort: { problems_solved: -1 }
+  }
+])
+
+Output:
+{
+  _id: ObjectId('507f1f77bcf86cd799439011'),
+  problems_solved: 3,
+  user_name: 'Rahul Sharma',
+  user_email: 'rahul@gmail.com'
+}
+{
+  _id: ObjectId('507f1f77bcf86cd799439012'),
+  problems_solved: 2,
+  user_name: 'Priya Singh',
+  user_email: 'priya@gmail.com'
+}
+{
+  _id: ObjectId('507f1f77bcf86cd799439013'),
+  problems_solved: 1,
+  user_name: 'Amit Kumar',
+  user_email: 'amit@gmail.com'
+}
+
+
+
+5. Find mentors with more than 15 mentees
+
+db.mentors.find({
+  mentee_count: { $gt: 15 }
+})
+
+Output: 
+{
+  _id: ObjectId('607f1f77bcf86cd799439001'),
+  mentor_name: 'Suresh Kumar',
+  email: 'suresh@zen.com',
+  mentee_count: 18
+}
+{
+  _id: ObjectId('607f1f77bcf86cd799439003'),
+  mentor_name: 'Rajesh Menon',
+  email: 'rajesh@zen.com',
+  mentee_count: 20
+}
+
+
+
+6. Find users absent AND task not submitted between 15-Oct-2020 and 31-Oct-2020
+
+db.attendance.aggregate([
+  {
+    $match: {
+      date: { $gte: ISODate("2020-10-15"), $lte: ISODate("2020-10-31") },
+      status: "absent"
+    }
+  },
+  {
+    $lookup: {
+      from: "tasks",
+      let: { userId: "$user_id" },
+      pipeline: [
+        {
+          $match: {
+            $expr: { $eq: ["$user_id", "$$userId"] },
+            assigned_date: { $gte: ISODate("2020-10-15"), $lte: ISODate("2020-10-31") },
+            submitted: false
+          }
+        }
+      ],
+      as: "pending_tasks"
+    }
+  },
+  { $match: { "pending_tasks.0": { $exists: true } } },
+  { $group: { _id: "$user_id" } },
+  { $count: "total_users" }
+])
+
+Output:
+{
+  total_users: 2
+}
+
+
+
+
+
+
+
+
+

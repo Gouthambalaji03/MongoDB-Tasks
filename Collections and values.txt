@@ -1,0 +1,333 @@
+
+ // Inserting Sample values in the collection 
+
+
+
+// Insert sample users
+
+db.users.insertMany([
+  {
+    _id: ObjectId("507f1f77bcf86cd799439011"),
+    name: "Rahul Sharma",
+    email: "rahul@gmail.com",
+    phone: "9876543210",
+    mentor_id: ObjectId("607f1f77bcf86cd799439001")
+  },
+  {
+    _id: ObjectId("507f1f77bcf86cd799439012"),
+    name: "Priya Singh",
+    email: "priya@gmail.com",
+    phone: "9876543211",
+    mentor_id: ObjectId("607f1f77bcf86cd799439001")
+  },
+  {
+    _id: ObjectId("507f1f77bcf86cd799439013"),
+    name: "Amit Kumar",
+    email: "amit@gmail.com",
+    phone: "9876543212",
+    mentor_id: ObjectId("607f1f77bcf86cd799439002")
+  },
+  {
+    _id: ObjectId("507f1f77bcf86cd799439014"),
+    name: "Sneha Patel",
+    email: "sneha@gmail.com",
+    phone: "9876543213",
+    mentor_id: ObjectId("607f1f77bcf86cd799439001")
+  },
+  {
+    _id: ObjectId("507f1f77bcf86cd799439015"),
+    name: "Vikram Reddy",
+    email: "vikram@gmail.com",
+    phone: "9876543214",
+    mentor_id: ObjectId("607f1f77bcf86cd799439002")
+  }
+])
+
+Output: 
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('507f1f77bcf86cd799439011'),
+    '1': ObjectId('507f1f77bcf86cd799439012'),
+    '2': ObjectId('507f1f77bcf86cd799439013'),
+    '3': ObjectId('507f1f77bcf86cd799439014'),
+    '4': ObjectId('507f1f77bcf86cd799439015')
+  }
+}
+
+
+// Insert sample topics
+
+db.topics.insertMany([
+  {
+    _id: ObjectId("707f1f77bcf86cd799439001"),
+    topic_name: "HTML & CSS",
+    topic_date: ISODate("2020-10-05")
+  },
+  {
+    _id: ObjectId("707f1f77bcf86cd799439002"),
+    topic_name: "JavaScript Basics",
+    topic_date: ISODate("2020-10-10")
+  },
+  {
+    _id: ObjectId("707f1f77bcf86cd799439003"),
+    topic_name: "React Introduction",
+    topic_date: ISODate("2020-10-15")
+  },
+  {
+    _id: ObjectId("707f1f77bcf86cd799439004"),
+    topic_name: "MongoDB Basics",
+    topic_date: ISODate("2020-10-20")
+  },
+  {
+    _id: ObjectId("707f1f77bcf86cd799439005"),
+    topic_name: "Node.js",
+    topic_date: ISODate("2020-10-25")
+  }
+])
+
+Output: 
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('707f1f77bcf86cd799439001'),
+    '1': ObjectId('707f1f77bcf86cd799439002'),
+    '2': ObjectId('707f1f77bcf86cd799439003'),
+    '3': ObjectId('707f1f77bcf86cd799439004'),
+    '4': ObjectId('707f1f77bcf86cd799439005')
+  }
+}
+
+
+
+// Insert sample company drives
+
+db.company_drives.insertMany([
+  {
+    company_name: "TCS",
+    drive_date: ISODate("2020-10-18"),
+    students_appeared: [
+      ObjectId("507f1f77bcf86cd799439011"),
+      ObjectId("507f1f77bcf86cd799439012"),
+      ObjectId("507f1f77bcf86cd799439013")
+    ]
+  },
+  {
+    company_name: "Infosys",
+    drive_date: ISODate("2020-10-22"),
+    students_appeared: [
+      ObjectId("507f1f77bcf86cd799439011"),
+      ObjectId("507f1f77bcf86cd799439014")
+    ]
+  },
+  {
+    company_name: "Wipro",
+    drive_date: ISODate("2020-10-28"),
+    students_appeared: [
+      ObjectId("507f1f77bcf86cd799439012"),
+      ObjectId("507f1f77bcf86cd799439013"),
+      ObjectId("507f1f77bcf86cd799439014"),
+      ObjectId("507f1f77bcf86cd799439015")
+    ]
+  }
+])
+
+Output: 
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('692ccb30d7753d7742e99955'),
+    '1': ObjectId('692ccb30d7753d7742e99956'),
+    '2': ObjectId('692ccb30d7753d7742e99957')
+  }
+}
+
+//Insert sample codekata 
+
+db.codekata.insertMany([
+  {
+    user_id: ObjectId("507f1f77bcf86cd799439011"),
+    problem_title: "Two Sum",
+    solved: true,
+    solved_date: ISODate("2020-10-10")
+  },
+  {
+    user_id: ObjectId("507f1f77bcf86cd799439011"),
+    problem_title: "Reverse String",
+    solved: true,
+    solved_date: ISODate("2020-10-12")
+  },
+  {
+    user_id: ObjectId("507f1f77bcf86cd799439011"),
+    problem_title: "Palindrome",
+    solved: true,
+    solved_date: ISODate("2020-10-15")
+  },
+  {
+    user_id: ObjectId("507f1f77bcf86cd799439012"),
+    problem_title: "Two Sum",
+    solved: true,
+    solved_date: ISODate("2020-10-11")
+  },
+  {
+    user_id: ObjectId("507f1f77bcf86cd799439012"),
+    problem_title: "Array Sum",
+    solved: true,
+    solved_date: ISODate("2020-10-14")
+  },
+  {
+    user_id: ObjectId("507f1f77bcf86cd799439013"),
+    problem_title: "Two Sum",
+    solved: true,
+    solved_date: ISODate("2020-10-09")
+  }
+])
+
+Output:
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('692ccbc4d7753d7742e99958'),
+    '1': ObjectId('692ccbc4d7753d7742e99959'),
+    '2': ObjectId('692ccbc4d7753d7742e9995a'),
+    '3': ObjectId('692ccbc4d7753d7742e9995b'),
+    '4': ObjectId('692ccbc4d7753d7742e9995c'),
+    '5': ObjectId('692ccbc4d7753d7742e9995d')
+  }
+}
+
+// Insert sample attendance
+
+db.attendance.insertMany([
+  {
+    user_id: ObjectId("507f1f77bcf86cd799439011"),
+    date: ISODate("2020-10-15"),
+    status: "present"
+  },
+  {
+    user_id: ObjectId("507f1f77bcf86cd799439011"),
+    date: ISODate("2020-10-20"),
+    status: "absent"
+  },
+  {
+    user_id: ObjectId("507f1f77bcf86cd799439012"),
+    date: ISODate("2020-10-15"),
+    status: "absent"
+  },
+  {
+    user_id: ObjectId("507f1f77bcf86cd799439012"),
+    date: ISODate("2020-10-20"),
+    status: "present"
+  },
+  {
+    user_id: ObjectId("507f1f77bcf86cd799439013"),
+    date: ISODate("2020-10-18"),
+    status: "absent"
+  },
+  {
+    user_id: ObjectId("507f1f77bcf86cd799439014"),
+    date: ISODate("2020-10-22"),
+    status: "absent"
+  }
+])
+
+Output: 
+
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('692ccc05d7753d7742e9995e'),
+    '1': ObjectId('692ccc05d7753d7742e9995f'),
+    '2': ObjectId('692ccc05d7753d7742e99960'),
+    '3': ObjectId('692ccc05d7753d7742e99961'),
+    '4': ObjectId('692ccc05d7753d7742e99962'),
+    '5': ObjectId('692ccc05d7753d7742e99963')
+  }
+}
+
+// Insert sample task
+
+db.tasks.insertMany([
+  {
+    task_title: "HTML Portfolio",
+    topic_id: ObjectId("707f1f77bcf86cd799439001"),
+    user_id: ObjectId("507f1f77bcf86cd799439011"),
+    assigned_date: ISODate("2020-10-05"),
+    submitted: true,
+    submitted_date: ISODate("2020-10-08")
+  },
+  {
+    task_title: "CSS Styling",
+    topic_id: ObjectId("707f1f77bcf86cd799439001"),
+    user_id: ObjectId("507f1f77bcf86cd799439012"),
+    assigned_date: ISODate("2020-10-06"),
+    submitted: false
+  },
+  {
+    task_title: "JavaScript Calculator",
+    topic_id: ObjectId("707f1f77bcf86cd799439002"),
+    user_id: ObjectId("507f1f77bcf86cd799439011"),
+    assigned_date: ISODate("2020-10-12"),
+    submitted: true,
+    submitted_date: ISODate("2020-10-14")
+  },
+  {
+    task_title: "React Component",
+    topic_id: ObjectId("707f1f77bcf86cd799439003"),
+    user_id: ObjectId("507f1f77bcf86cd799439012"),
+    assigned_date: ISODate("2020-10-18"),
+    submitted: false
+  },
+  {
+    task_title: "MongoDB CRUD",
+    topic_id: ObjectId("707f1f77bcf86cd799439004"),
+    user_id: ObjectId("507f1f77bcf86cd799439013"),
+    assigned_date: ISODate("2020-10-22"),
+    submitted: false
+  }
+])
+
+Output:
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('692ccc65d7753d7742e99964'),
+    '1': ObjectId('692ccc65d7753d7742e99965'),
+    '2': ObjectId('692ccc65d7753d7742e99966'),
+    '3': ObjectId('692ccc65d7753d7742e99967'),
+    '4': ObjectId('692ccc65d7753d7742e99968')
+  }
+}
+
+// Insert sample mentors
+
+db.mentors.insertMany([
+  {
+    _id: ObjectId("607f1f77bcf86cd799439001"),
+    mentor_name: "Suresh Kumar",
+    email: "suresh@zen.com",
+    mentee_count: 18
+  },
+  {
+    _id: ObjectId("607f1f77bcf86cd799439002"),
+    mentor_name: "Kavitha Rao",
+    email: "kavitha@zen.com",
+    mentee_count: 12
+  },
+  {
+    _id: ObjectId("607f1f77bcf86cd799439003"),
+    mentor_name: "Rajesh Menon",
+    email: "rajesh@zen.com",
+    mentee_count: 20
+  }
+])
+
+Output: 
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('607f1f77bcf86cd799439001'),
+    '1': ObjectId('607f1f77bcf86cd799439002'),
+    '2': ObjectId('607f1f77bcf86cd799439003')
+  }
+}
